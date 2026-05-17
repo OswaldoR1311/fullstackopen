@@ -18,17 +18,27 @@ const App = () => {
 
   const handleRandomAnecdote = () => setSelected(generateRandomIndex)
 
+  const determineMax = () => {
+    const index = votes.indexOf(Math.max(...votes))
+    return index
+  }
+
   const handleVote = (selectedValue) => {
     const copy = [...votes]
     copy[selectedValue] += 1
     setVotes(copy)
   }
+
+  console.log('estos son los votes', votes)
+  console.log('valor maximo del array', determineMax())
   return (
     <div>
       <p>{anecdotes[selected]}</p>
       <p>Has {votes[selected]} votes</p>
       <button onClick={() => handleVote(selected)}>vote</button>
       <button onClick={handleRandomAnecdote}>next anecdote</button>
+      <h2>Anecdote with most votes</h2>
+      {anecdotes[determineMax()]}
     </div>
   )
 }
