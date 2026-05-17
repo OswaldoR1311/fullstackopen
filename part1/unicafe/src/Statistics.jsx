@@ -44,13 +44,19 @@ const Statistics = ({ good, neutral, bad }) => {
 
   return (
     <div>
-      <h2>Statistics</h2>
-      {options.map(({ name, value }) => (
-        <Topic label={name} value={value} key={name} />
-      ))}
-      <p>all {totalFeedback()}</p>
-      <p>average {calculateAverage()}</p>
-      <p>positive {calculatePositive()}%</p>
+      {totalFeedback() === 0 ? (
+        <h2>No feedback given</h2>
+      ) : (
+        <>
+          <h2>Statistics</h2>
+          {options.map(({ name, value }) => (
+            <Topic label={name} value={value} key={name} />
+          ))}
+          <p>all {totalFeedback()}</p>
+          <p>average {calculateAverage()}</p>
+          <p>positive {calculatePositive()}%</p>
+        </>
+      )}
     </div>
   )
 }
