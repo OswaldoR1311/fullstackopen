@@ -1,4 +1,4 @@
-import Topic from './Topic'
+import StatisticLine from './StatisticLine'
 
 const Statistics = ({ good, neutral, bad }) => {
   const options = [
@@ -48,13 +48,28 @@ const Statistics = ({ good, neutral, bad }) => {
         <h2>No feedback given</h2>
       ) : (
         <>
-          <h2>Statistics</h2>
-          {options.map(({ name, value }) => (
-            <Topic label={name} value={value} key={name} />
-          ))}
-          <p>all {totalFeedback()}</p>
-          <p>average {calculateAverage()}</p>
-          <p>positive {calculatePositive()}%</p>
+          <table>
+            <thead>
+              <th>Statistics</th>
+            </thead>
+            <tbody>
+              {options.map(({ name, value }) => (
+                <tr>
+                  {' '}
+                  <StatisticLine label={name} value={value} key={name} />
+                </tr>
+              ))}
+              <tr>
+                <td>all {totalFeedback()}</td>
+              </tr>
+              <tr>
+                <td>average {calculateAverage()}</td>
+              </tr>
+              <tr>
+                <td>positive {calculatePositive()}%</td>
+              </tr>
+            </tbody>
+          </table>
         </>
       )}
     </div>
