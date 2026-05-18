@@ -12,17 +12,36 @@ const Form = ({ formValues }) => {
     const newPerson = { name: newName, phone: phone }
     const findPerson = persons.find((person) => person.name === newPerson.name)
 
+    const handleCleanInputs = () => {
+      onNewName('')
+      onPhone('')
+      inputRef.current.focus()
+    }
+
     if (!findPerson) {
       phonebookService.create(newPerson).then((returnedObj) => {
         onPersons(persons.concat(returnedObj))
-        onNewName('')
-        onPhone('')
-        inputRef.current.focus()
+        handleCleanInputs()
       })
     } else {
-      alert(`${newPerson.name} is already added to the phonebook`)
-      onNewName('')
-      onPhone('')
+      if (
+        confirm(
+          `${newPerson.name} is already added to the phonebook, replace the old number with a new one?`,
+        )
+      ) {
+        const changedObject = { ...findPerson, phone: phone }
+        const eventHandler = (returnedObject) => {
+          onPersons(
+            persons.map((person) =>
+              person.id === findPerson.id ? returnedObject : person,
+            ),
+          )
+        }
+        phonebookService.update(findPerson.id, changedObject).then(eventHandler)
+        handleCleanInputs()
+      } else {
+        handleCleanInputs()
+      }
     }
   }
 

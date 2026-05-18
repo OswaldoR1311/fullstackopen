@@ -1,24 +1,29 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": "1"
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": "2"
-    },
-    {
       "name": "Dan Abramov",
-      "number": "12-43-234345",
+      "phone": "12345678974",
       "id": "3"
     },
     {
       "name": "Lionel Messi",
       "phone": "0424-90296769",
       "id": "LthkPmiosEA"
+    },
+    {
+      "name": "Oswaldo Rodriguez",
+      "phone": "0424-9029676",
+      "id": "1ArVIXQp7kw"
+    },
+    {
+      "name": "Arto Hellas",
+      "phone": "123456",
+      "id": "HD_vaFJX59Y"
+    },
+    {
+      "name": "Agregando nueva Persona",
+      "phone": "123",
+      "id": "ypq5yP49gJM"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
