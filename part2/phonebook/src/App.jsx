@@ -33,12 +33,24 @@ const App = () => {
     onPersons: setPersons,
   }
 
+  const deletePerson = (id) => {
+    const findPerson = persons.find((person) => person.id === id)
+    const eventHandler = () => {
+      setPersons(persons.filter((person) => person.id !== findPerson.id))
+    }
+    if (confirm(`Are you sure to eliminate ${findPerson.name} ?`)) {
+      phonebookService.deletePerson(id).then(eventHandler)
+    } else {
+      return
+    }
+  }
+
   return (
     <div>
       <Heading />
       <Filter filter={filter} onChangeFilter={setFilter} />
       <Form formValues={formValues} />
-      <PersonList filteredList={filteredList} />
+      <PersonList filteredList={filteredList} onDelete={deletePerson} />
     </div>
   )
 }
