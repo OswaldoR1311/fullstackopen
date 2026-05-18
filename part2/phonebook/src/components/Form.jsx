@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import phonebookService from '../services/phonebook'
 
 const Form = ({ formValues }) => {
   const { persons, onNewName, onPhone, onPersons, phone, newName } = formValues
@@ -12,10 +13,12 @@ const Form = ({ formValues }) => {
     const findPerson = persons.find((person) => person.name === newPerson.name)
 
     if (!findPerson) {
-      onPersons(persons.concat(newPerson))
-      onNewName('')
-      onPhone('')
-      inputRef.current.focus()
+      phonebookService.create(newPerson).then((returnedObj) => {
+        onPersons(persons.concat(returnedObj))
+        onNewName('')
+        onPhone('')
+        inputRef.current.focus()
+      })
     } else {
       alert(`${newPerson.name} is already added to the phonebook`)
       onNewName('')

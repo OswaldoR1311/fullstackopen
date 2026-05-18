@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
-import Heading from './Heading'
-import Filter from './Filter'
-import Form from './Form'
-import PersonList from './PersonList'
+import Heading from './components/Heading'
+import Filter from './components/Filter'
+import Form from './components/Form'
+import PersonList from './components/PersonList'
+import phonebookService from './services/phonebook'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -11,15 +11,12 @@ const App = () => {
   const [phone, setPhone] = useState('')
   const [filter, setFilter] = useState('')
 
-  const baseUrl = 'http://localhost:3001/persons'
-
   useEffect(() => {
-    const promise = axios.get(baseUrl)
-    const eventHandler = (response) => {
-      const dataFromServer = response.data
+    const eventHandler = (personList) => {
+      const dataFromServer = personList
       setPersons(dataFromServer)
     }
-    promise.then(eventHandler)
+    phonebookService.getAll().then(eventHandler)
   }, [])
 
   const filterPersonsByName = persons.filter((person) =>
