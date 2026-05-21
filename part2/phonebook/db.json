@@ -2,28 +2,33 @@
   "persons": [
     {
       "name": "Dan Abramov",
-      "phone": "12345678974",
+      "phone": "123456",
       "id": "3"
     },
     {
       "name": "Lionel Messi",
-      "phone": "0424-90296769",
+      "phone": "147852369",
       "id": "LthkPmiosEA"
     },
     {
+      "name": "Karolina Rodriguez",
+      "phone": "0412-1519580",
+      "id": "ugAW-NflYQU"
+    },
+    {
       "name": "Oswaldo Rodriguez",
-      "phone": "0424-9029676",
-      "id": "1ArVIXQp7kw"
+      "phone": "147845978",
+      "id": "8rbDLRcbHLw"
     },
     {
-      "name": "Arto Hellas",
-      "phone": "123456",
-      "id": "HD_vaFJX59Y"
+      "name": "Cristiano Ronaldo",
+      "phone": "14523654",
+      "id": "S-1xOL_C_a8"
     },
     {
-      "name": "Agregando nueva Persona",
-      "phone": "123",
-      "id": "ypq5yP49gJM"
+      "name": "Nidia Moreno",
+      "phone": "0424-9395895",
+      "id": "ilaMXHmOXzo"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

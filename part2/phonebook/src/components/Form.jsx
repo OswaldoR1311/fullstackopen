@@ -1,7 +1,8 @@
 import { useRef } from 'react'
 import phonebookService from '../services/phonebook'
+import { notificationOptions, notificationStatusOptions } from '../constants'
 
-const Form = ({ formValues }) => {
+const Form = ({ formValues, message, status, onMessage, onStatus }) => {
   const { persons, onNewName, onPhone, onPersons, phone, newName } = formValues
   const inputRef = useRef(null)
   const handleInputChange = (event) => onNewName(event.target.value)
@@ -23,6 +24,12 @@ const Form = ({ formValues }) => {
         onPersons(persons.concat(returnedObj))
         handleCleanInputs()
       })
+      onMessage(`${newPerson.name} ${notificationOptions.addSuccess}`)
+      onStatus(notificationStatusOptions.success)
+      setTimeout(() => {
+        onMessage(null)
+        onStatus(null)
+      }, 3000)
     } else {
       if (
         confirm(
@@ -38,8 +45,20 @@ const Form = ({ formValues }) => {
           )
         }
         phonebookService.update(findPerson.id, changedObject).then(eventHandler)
+        onMessage(`${findPerson.name} ${notificationOptions.editSuccess}`)
+        onStatus(notificationStatusOptions.success)
+        setTimeout(() => {
+          onMessage(null)
+          onStatus(null)
+        }, 3000)
         handleCleanInputs()
       } else {
+        onMessage(`${findPerson.name} ${notificationOptions.editSuccess}`)
+        onStatus(notificationStatusOptions.success)
+        setTimeout(() => {
+          onMessage(null)
+          onStatus(null)
+        }, 3000)
         handleCleanInputs()
       }
     }

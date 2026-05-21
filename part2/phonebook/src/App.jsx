@@ -4,12 +4,16 @@ import Filter from './components/Filter'
 import Form from './components/Form'
 import PersonList from './components/PersonList'
 import phonebookService from './services/phonebook'
+import Notification from './components/Notification'
+import { notificationOptions, notificationStatusOptions } from './constants'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [phone, setPhone] = useState('')
   const [filter, setFilter] = useState('')
+  const [notificationMessage, setNotificationMessage] = useState(null)
+  const [notificationStatus, setNotificationStatus] = useState(null)
 
   useEffect(() => {
     const eventHandler = (personList) => {
@@ -40,6 +44,14 @@ const App = () => {
     }
     if (confirm(`Are you sure to eliminate ${findPerson.name} ?`)) {
       phonebookService.deletePerson(id).then(eventHandler)
+      setNotificationMessage(
+        `${findPerson.name} ${notificationOptions.deleteSuccess}`,
+      )
+      setNotificationStatus(notificationStatusOptions.success)
+      setTimeout(() => {
+        setNotificationMessage(null)
+        setNotificationStatus(null)
+      }, 3000)
     } else {
       return
     }
@@ -48,8 +60,15 @@ const App = () => {
   return (
     <div>
       <Heading />
+      <Notification message={notificationMessage} status={notificationStatus} />
       <Filter filter={filter} onChangeFilter={setFilter} />
-      <Form formValues={formValues} />
+      <Form
+        formValues={formValues}
+        message={notificationMessage}
+        status={notificationStatus}
+        onMessage={setNotificationMessage}
+        onStatus={setNotificationStatus}
+      />
       <PersonList filteredList={filteredList} onDelete={deletePerson} />
     </div>
   )
