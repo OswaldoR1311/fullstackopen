@@ -27,7 +27,7 @@ let persons = [
 app.use(express.json())
 
 app.get('/api/persons', (req, res) => {
-  res.json(persons)
+  res.status(200).json(persons)
 })
 
 app.get('/info', (req, res) => {
