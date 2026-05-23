@@ -33,9 +33,21 @@ app.get('/api/persons', (req, res) => {
 app.get('/info', (req, res) => {
   const date = new Date()
   const html = `<p>Phonebook has info for ${persons.length} people</p>
-        <p>${date.toLocaleTimeString()} ${date.toLocaleDateString()}</p>
+        <p>${date.toString()}</p>
     `
   res.send(html)
+})
+
+app.get('/api/persons/:id', (req, res) => {
+  const id = req.params.id
+  const findPerson = persons.find((person) => person.id === id)
+  if (findPerson) {
+    return res.json(findPerson)
+  } else {
+    return res
+      .status(400)
+      .json({ error: 'Entry does not exist in the phonebook' })
+  }
 })
 
 const PORT = 3001
