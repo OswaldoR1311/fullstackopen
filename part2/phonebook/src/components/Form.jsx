@@ -10,7 +10,7 @@ const Form = ({ formValues, message, status, onMessage, onStatus }) => {
 
   const handleAddPerson = (event) => {
     event.preventDefault()
-    const newPerson = { name: newName, phone: phone }
+    const newPerson = { name: newName, number: phone }
     const findPerson = persons.find((person) => person.name === newPerson.name)
 
     const handleCleanInputs = () => {
