@@ -1,29 +1,8 @@
 const express = require('express')
+require('dotenv').config()
+const Person = require('./models/person')
 const morgan = require('morgan')
 const app = express()
-
-let persons = [
-  {
-    id: '1',
-    name: 'Arto Hellas',
-    number: '040-123456',
-  },
-  {
-    id: '2',
-    name: 'Ada Lovelace',
-    number: '39-44-5323523',
-  },
-  {
-    id: '3',
-    name: 'Dan Abramov',
-    number: '12-43-234345',
-  },
-  {
-    id: '4',
-    name: 'Mary Poppendieck',
-    number: '39-23-6423122',
-  },
-]
 
 const generateID = () => {
   return Math.floor(Math.random() * 1000000)
@@ -34,7 +13,9 @@ morgan.token('body', (request) => JSON.stringify(request.body))
 app.use(morgan(':method :url :status :status - :response-time ms :body'))
 
 app.get('/api/persons', (req, res) => {
-  res.status(200).json(persons)
+  Person.find({}).then((persons) => {
+    res.status(200).json(persons)
+  })
 })
 
 app.get('/info', (req, res) => {
@@ -76,20 +57,14 @@ app.post('/api/persons', (req, res) => {
     return res.status(400).json({ error: 'Missing name or number' })
   }
 
-  const validatePerson = persons.find((p) => p.name === body.name)
-  if (validatePerson) {
-    return res.status(400).json({ error: 'Name must be unique' })
-  }
-
-  const newPerson = {
+  const newPerson = new Person({
     name: body.name,
     number: body.number,
-    id: generateID(),
-  }
+  })
 
-  persons = persons.concat(newPerson)
-
-  res.status(201).json(newPerson)
+  newPerson.save().then((savedPerson) => {
+    res.status(201).json(savedPerson)
+  })
 })
 
 const PORT = 3001

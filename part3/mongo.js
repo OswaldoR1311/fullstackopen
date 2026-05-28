@@ -22,10 +22,6 @@ const Person = new mongoose.model('Person', personSchema)
 
 const newPerson = new Person({ name: 'Oswaldo', number: '123456789' })
 
-// newPerson.save().then((result) => {
-//   console.log('Person saved!')
-// })
-
 if (process.argv.length === 3) {
   Person.find({}).then((result) => {
     result.forEach((person) => console.log(`${person.name} ${person.number}`))
