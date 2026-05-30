@@ -5,13 +5,13 @@ import { notificationOptions, notificationStatusOptions } from '../constants'
 const Form = ({ formValues, message, status, onMessage, onStatus }) => {
   const { persons, onNewName, onPhone, onPersons, phone, newName } = formValues
   const inputRef = useRef(null)
-  const handleInputChange = (event) => onNewName(event.target.value)
-  const handlePhoneChange = (event) => onPhone(event.target.value)
+  const handleInputChange = event => onNewName(event.target.value)
+  const handlePhoneChange = event => onPhone(event.target.value)
 
-  const handleAddPerson = (event) => {
+  const handleAddPerson = event => {
     event.preventDefault()
     const newPerson = { name: newName, number: phone }
-    const findPerson = persons.find((person) => person.name === newPerson.name)
+    const findPerson = persons.find(person => person.name === newPerson.name)
 
     const handleCleanInputs = () => {
       onNewName('')
@@ -20,10 +20,15 @@ const Form = ({ formValues, message, status, onMessage, onStatus }) => {
     }
 
     if (!findPerson) {
-      phonebookService.create(newPerson).then((returnedObj) => {
-        onPersons(persons.concat(returnedObj))
-        handleCleanInputs()
-      })
+      phonebookService
+        .create(newPerson)
+        .then(returnedObj => {
+          onPersons(persons.concat(returnedObj))
+          handleCleanInputs()
+        })
+        .catch(error => {
+          console.log(error.response.data.error)
+        })
       onMessage(`${newPerson.name} ${notificationOptions.addSuccess}`)
       onStatus(notificationStatusOptions.success)
       setTimeout(() => {
@@ -33,15 +38,15 @@ const Form = ({ formValues, message, status, onMessage, onStatus }) => {
     } else {
       if (
         confirm(
-          `${newPerson.name} is already added to the phonebook, replace the old number with a new one?`,
+          `${newPerson.name} is already added to the phonebook, replace the old number with a new one?`
         )
       ) {
         const changedObject = { ...findPerson, phone: phone }
-        const eventHandler = (returnedObject) => {
+        const eventHandler = returnedObject => {
           onPersons(
-            persons.map((person) =>
-              person.id === findPerson.id ? returnedObject : person,
-            ),
+            persons.map(person =>
+              person.id === findPerson.id ? returnedObject : person
+            )
           )
         }
 
